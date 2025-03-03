@@ -1,0 +1,13 @@
+/*
+import { NextResponse } from 'next/server'
+
+export async function GET(request: Request) {
+  const requestUrl = new URL(request.url)
+  const redirectTo = requestUrl.searchParams.get('redirectTo') || '/dashboard'
+  
+  // Firebase handles the authentication flow client-side
+  // This route is just for handling redirects after authentication
+  
+  return NextResponse.redirect(new URL(redirectTo, request.url))
+} 
+*/

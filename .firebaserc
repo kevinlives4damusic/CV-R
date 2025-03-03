@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "cvproject-e968c"
+  },
+  "targets": {
+    "cvproject-e968c": {
+      "hosting": {
+        "resumethecv": [
+          "resumethecv"
+        ]
+      }
+    }
+  }
+}
