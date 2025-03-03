@@ -26,16 +26,6 @@ const nextConfig = {
   // Trailing slash for better static hosting compatibility
   trailingSlash: true,
   
-  // Experimental features
-  experimental: {
-    // Improve module resolution
-    esmExternals: 'loose',
-    // Improve build stability
-    turbotrace: {
-      logLevel: 'error',
-    },
-  },
-  
   // Increase build timeout
   staticPageGenerationTimeout: 180,
 }
