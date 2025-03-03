@@ -298,7 +298,7 @@ export default function ResultsPage() {
           <div className="bg-white rounded-xl shadow-md p-8 mb-8">
             <div className="flex flex-col items-center text-center">
               <ProgressCircle 
-                percentage={analysisResult?.overallScore || 0} 
+                score={analysisResult?.overallScore || 0} 
                 size={160} 
                 strokeWidth={12}
               />
