@@ -75,11 +75,10 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
   };
 
   const handleReplaceFile = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    } else {
-      open();
+    if (file) {
+      removeFile();
     }
+    open();
   };
 
   return (

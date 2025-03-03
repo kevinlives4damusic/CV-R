@@ -108,11 +108,7 @@ const Header = () => {
                   </div>
                 )}
               </div>
-            ) : (
-              <Link href="/auth/login" className={`${isScrolled ? 'text-gray-800' : 'text-gray-800'} hover:text-indigo-600 transition-colors`}>
-                Login
-              </Link>
-            ))}
+            ) : null)}
             
             <Button variant="accent" className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all">
               <Link href={!loading && user ? "/dashboard" : "/auth/login"}>
@@ -183,15 +179,7 @@ const Header = () => {
                   Sign Out
                 </button>
               </>
-            ) : (
-              <Link 
-                href="/auth/login" 
-                className="text-gray-800 hover:text-indigo-600 transition-colors px-4 py-2 hover:bg-gray-50"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
-            ))}
+            ) : null)}
             
             <div className="px-4 pt-2">
               <Button 

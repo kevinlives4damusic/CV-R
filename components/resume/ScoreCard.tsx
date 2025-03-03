@@ -81,7 +81,7 @@ const ScoreCard = ({ score, section, feedback, improvements, quotes = [] }: Scor
               ></div>
             </div>
           </div>
-          <div className={`rounded-full p-1 ${isExpanded ? 'bg-gray-200' : 'bg-indigo-100 animate-bounce'}`}>
+          <div className={`rounded-full p-1 transition-all duration-200 ${isExpanded ? 'bg-gray-200' : 'bg-indigo-100'}`}>
             {isExpanded ? (
               <ChevronUp className="h-5 w-5 text-gray-600" />
             ) : (

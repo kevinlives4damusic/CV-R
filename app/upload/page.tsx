@@ -500,76 +500,35 @@ export default function UploadPage() {
   // Render different content based on the current step
   const renderStepContent = () => {
     switch (uploadStep) {
-      case 1: // Upload step
+      case 1:
         return (
-          <>
-            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 mb-8 hover:shadow-lg transition-all">
-              <h2 className="text-2xl font-semibold mb-6 text-gray-900">Upload Resume</h2>
-              <FileUpload onFileUpload={handleFileUpload} />
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 mb-8 hover:shadow-lg transition-all">
-              <div className="flex items-center mb-6">
-                <Briefcase className="h-5 w-5 text-indigo-600 mr-3" />
-                <h2 className="text-2xl font-semibold text-gray-900">Provide details about the job you're applying for</h2>
-              </div>
-              <p className="text-gray-700 mb-8">
-                Adding job details helps us provide more tailored recommendations for your resume.
+          <div className="space-y-8">
+            <div className="text-center">
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">Upload Your Resume</h1>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Upload your resume in PDF or Word format for AI-powered analysis. We'll help you understand your resume's strengths and areas for improvement.
               </p>
-
-              <div className="space-y-6">
-                <div>
-                  <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
-                    Job Title
-                  </label>
-                  <input
-                    type="text"
-                    id="jobTitle"
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white shadow-sm"
-                    placeholder="e.g. Software Engineer, Marketing Manager"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="jobDescription" className="block text-sm font-medium text-gray-700 mb-2">
-                    Job Description
-                  </label>
-                  <textarea
-                    id="jobDescription"
-                    value={jobDescription}
-                    onChange={(e) => setJobDescription(e.target.value)}
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-gray-900 bg-white shadow-sm"
-                    placeholder="Paste the job description here..."
-                  />
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <Button
-                  variant="accent"
-                  size="lg"
-                  disabled={!file || isAnalyzing}
-                  onClick={handleAnalyze}
-                  className="w-full sm:w-auto py-3 px-8 text-base font-medium shadow-md hover:shadow-lg transition-all duration-200 transform hover:translate-y-[-2px] bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white"
-                >
-                  {isAnalyzing ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Analyzing...
-                    </span>
-                  ) : (
-                    'Analyze Resume'
-                  )}
-                </Button>
-              </div>
             </div>
-          </>
+
+            <FileUpload onFileUpload={handleFileUpload} />
+
+            <div className="flex flex-col items-center space-y-4">
+              {file && (
+                <Button
+                  onClick={handleAnalyze}
+                  disabled={isAnalyzing}
+                  className="w-full max-w-md bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all"
+                >
+                  {isAnalyzing ? 'Analyzing...' : 'Analyze Resume'}
+                </Button>
+              )}
+              {user && (
+                <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-700 text-sm">
+                  Go to Dashboard
+                </Link>
+              )}
+            </div>
+          </div>
         );
       
       case 2: // Processing step

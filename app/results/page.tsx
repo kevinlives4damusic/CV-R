@@ -248,42 +248,17 @@ export default function ResultsPage() {
                   <div className="h-10 bg-gray-200 rounded w-1/3 mb-2"></div>
                   <div className="h-4 bg-gray-200 rounded w-1/4"></div>
                 </div>
-                <div className="animate-pulse">
-                  <div className="h-10 w-24 bg-gray-200 rounded"></div>
-                </div>
               </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="animate-pulse">
-                  <div className="h-40 bg-gray-200 rounded-lg"></div>
-                </div>
-                <div className="animate-pulse">
-                  <div className="h-40 bg-gray-200 rounded-lg"></div>
-                </div>
+              {/* Loading animation for sections */}
+              <div className="space-y-6">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse">
+                    <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+                  </div>
+                ))}
               </div>
-              
-              <div className="animate-pulse mb-8">
-                <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
-                <div className="space-y-3">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                </div>
-              </div>
-              
-              <div className="animate-pulse">
-                <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
-                <div className="space-y-3">
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded"></div>
-                  <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-center items-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-indigo-500 mr-3"></div>
-              <p className="text-gray-700 font-medium">Loading your analysis results...</p>
             </div>
           </div>
         </div>
@@ -294,30 +269,20 @@ export default function ResultsPage() {
   if (error) {
     return (
       <MainLayout>
-        <div className="container-custom py-24 px-4 sm:px-6 bg-gradient-to-br from-white to-indigo-50">
-          <Link href="/upload" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-8 transition-colors">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Upload
-          </Link>
-          
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg flex items-start shadow-sm mb-8">
-              <AlertCircle className="h-5 w-5 mr-3 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium">{error}</p>
-                <p className="mt-2">Please try uploading your resume again.</p>
+        <div className="container-custom py-12 px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-xl shadow-md p-8 mb-8">
+              <div className="flex items-center text-red-600 mb-4">
+                <AlertCircle className="h-5 w-5 mr-2" />
+                <h2 className="text-xl font-semibold">Error</h2>
               </div>
-            </div>
-            
-            <div className="text-center">
-              <Button
-                variant="accent"
-                size="lg"
-                onClick={() => router.push('/upload')}
-                className="py-3 px-8 text-base font-medium shadow-md bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white"
-              >
-                Upload Resume
-              </Button>
+              <p className="text-gray-600">{error}</p>
+              <div className="mt-6">
+                <Link href="/upload" className="text-indigo-600 hover:text-indigo-700 flex items-center">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Upload
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -327,205 +292,46 @@ export default function ResultsPage() {
 
   return (
     <MainLayout>
-      <div className="container-custom py-24 px-4 sm:px-6 bg-gradient-to-br from-white to-indigo-50">
-        <Link href="/upload" className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-8 transition-colors">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Upload
-        </Link>
-
+      <div className="container-custom py-12 px-4 sm:px-6 bg-gradient-to-br from-white to-indigo-50">
         <div className="max-w-4xl mx-auto">
-          {loading ? (
-            <div className="text-center py-20">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600 mb-4"></div>
-              <h2 className="text-xl font-semibold text-gray-700">Loading your analysis...</h2>
-            </div>
-          ) : error ? (
-            <div className="text-center py-20">
-              <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-700 mb-2">Error Loading Results</h2>
-              <p className="text-gray-600">{error}</p>
-              <Link href="/upload" className="mt-6 inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                Try Again
-              </Link>
-            </div>
-          ) : (
-            <>
-              <div className="text-center mb-10">
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">Your Resume Analysis</h1>
-                <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-                  Here's a detailed analysis of your resume with personalized feedback.
-                </p>
-              </div>
+          {/* Overall Score Section */}
+          <div className="bg-white rounded-xl shadow-md p-8 mb-8">
+            <div className="flex flex-col items-center text-center">
+              <ProgressCircle 
+                percentage={analysisResult?.overallScore || 0} 
+                size={160} 
+                strokeWidth={12}
+              />
+              <h2 className="text-2xl font-bold mt-4 mb-2">Overall Resume Score</h2>
+              <p className="text-gray-600 mb-6">Based on industry standards and best practices</p>
               
-              {/* New indicator for clicking cards */}
-              <div className="bg-indigo-100 border border-indigo-200 rounded-lg p-4 mb-8 shadow-sm">
-                <div className="flex items-center">
-                  <div className="bg-indigo-600 p-2 rounded-full mr-3">
-                    <ChevronDown className="h-5 w-5 text-white animate-bounce" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-indigo-800">Interactive Analysis</h3>
-                    <p className="text-indigo-700 text-sm">Click on each section card below to expand and see detailed feedback with specific references from your resume.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all">
-                  <h2 className="text-xl font-semibold mb-4 text-gray-900">Overall Score</h2>
-                  <div className="flex justify-center">
-                    <ProgressCircle 
-                      score={analysisResult?.overallScore || 0} 
-                      size={150} 
-                      strokeWidth={12}
-                    />
-                  </div>
-                </div>
-
-                {analysisResult && (
-                  <>
-                    {/* Overall Score Card */}
-                    <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 mb-8 hover:shadow-lg transition-all">
-                      <h2 className="text-2xl font-semibold mb-6 text-gray-900 flex items-center">
-                        <Award className="h-6 w-6 text-indigo-600 mr-2" />
-                        Overall Assessment
-                      </h2>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="flex flex-col items-center justify-center">
-                          <ProgressCircle score={analysisResult.overallScore} />
-                          <h3 className="mt-4 text-lg font-medium text-gray-900">Overall Resume Score</h3>
-                        </div>
-                        
-                        {analysisResult.jobMatch !== undefined && (
-                          <div className="flex flex-col items-center justify-center">
-                            <ProgressCircle score={analysisResult.jobMatch} />
-                            <h3 className="mt-4 text-lg font-medium text-gray-900">Job Match Score</h3>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="mt-8 p-4 bg-indigo-50 rounded-lg border border-indigo-100">
-                        <div className="flex items-start">
-                          <FileCheck className="h-5 w-5 text-indigo-600 mr-3 mt-0.5 flex-shrink-0" />
-                          <div>
-                            <h4 className="font-medium text-gray-900">What This Means</h4>
-                            <p className="mt-1 text-gray-700">
-                              {analysisResult.overallScore >= 80 ? 
-                                "Your resume is excellent! It's well-structured and contains strong content that will impress recruiters." :
-                                analysisResult.overallScore >= 60 ?
-                                "Your resume is good but has room for improvement. Review our suggestions to make it even stronger." :
-                                "Your resume needs significant improvements. Follow our suggestions to enhance your chances of getting interviews."
-                              }
-                            </p>
-                            
-                            {resumeText.includes('[Image Analysis:') && (
-                              <div className="mt-3 flex items-center text-sm text-indigo-700 bg-indigo-50 p-2 rounded-lg border border-indigo-100">
-                                <FileSearch className="h-4 w-4 mr-2 text-indigo-600" />
-                                <span>This analysis was performed on a resume image. The AI has analyzed the extracted text from your image.</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Section Analysis */}
-                    <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 mb-8 hover:shadow-lg transition-all">
-                      <h2 className="text-2xl font-semibold mb-6 text-gray-900 flex items-center">
-                        <BarChart className="h-6 w-6 text-indigo-600 mr-2" />
-                        Section-by-Section Analysis
-                      </h2>
-                      
-                      <div className="space-y-4">
-                        {analysisResult.sections.map((section, index) => (
-                          <ScoreCard 
-                            key={index}
-                            section={section.name}
-                            score={section.score}
-                            feedback={section.feedback}
-                            improvements={section.improvements}
-                            quotes={section.quotes}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Keyword Matches */}
-                    {analysisResult.keywordMatches && analysisResult.keywordMatches.length > 0 && (
-                      <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100 mb-8 hover:shadow-lg transition-all">
-                        <h2 className="text-2xl font-semibold mb-6 text-gray-900 flex items-center">
-                          <Target className="h-6 w-6 text-indigo-600 mr-2" />
-                          Keyword Analysis
-                        </h2>
-                        
-                        <p className="text-gray-700 mb-6">
-                          Keywords are important for passing Applicant Tracking Systems (ATS). Here's how your resume matches up with key terms:
-                        </p>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                          {analysisResult.keywordMatches.map((match, index) => (
-                            <div 
-                              key={index} 
-                              className={`p-3 rounded-lg border flex items-center ${
-                                match.found ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'
-                              }`}
-                            >
-                              {match.found ? (
-                                <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0" />
-                              ) : (
-                                <AlertCircle className="h-5 w-5 text-gray-400 mr-2 flex-shrink-0" />
-                              )}
-                              <span className={`${match.found ? 'text-gray-900' : 'text-gray-500'} font-medium truncate`}>
-                                {match.keyword}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Action Buttons */}
-                    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-8">
-                      <Button 
-                        onClick={() => router.push('/upload')}
-                        variant="outline"
-                        className="flex items-center justify-center"
-                      >
-                        <ArrowLeft className="h-4 w-4 mr-2" />
-                        Analyze Another Resume
-                      </Button>
-                      
-                      {user ? (
-                        <Link href="/dashboard">
-                          <Button 
-                            variant="accent"
-                            className="flex items-center justify-center w-full md:w-auto"
-                          >
-                            <FileText className="h-4 w-4 mr-2" />
-                            Go to Dashboard
-                          </Button>
-                        </Link>
-                      ) : (
-                        <Link href="/auth/login?redirectTo=/dashboard">
-                          <Button 
-                            variant="accent"
-                            className="flex items-center justify-center w-full md:w-auto"
-                          >
-                            <FileText className="h-4 w-4 mr-2" />
-                            Sign in to Save Results
-                          </Button>
-                        </Link>
-                      )}
-                    </div>
-                    
-                    {/* Original Resume Text */}
-                    <OriginalTextSection resumeText={resumeText} />
-                  </>
+              <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+                {!user && (
+                  <Link href="/auth/login" className="flex-1">
+                    <Button variant="outline" className="w-full border-indigo-600 text-indigo-600 hover:bg-indigo-50">
+                      Sign in to Save Results
+                    </Button>
+                  </Link>
                 )}
+                <Link href="/upload" className="flex-1">
+                  <Button variant="accent" className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white">
+                    Analyze Another Resume
+                  </Button>
+                </Link>
               </div>
-            </>
-          )}
+            </div>
+          </div>
+
+          {/* Detailed Analysis Sections */}
+          <div className="space-y-6">
+            {analysisResult?.sections.map((section, index) => (
+              <ScoreCard
+                key={index}
+                section={section}
+                className="transition-all duration-300 transform hover:scale-[1.02]"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </MainLayout>
