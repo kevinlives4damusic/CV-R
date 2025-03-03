@@ -7,9 +7,10 @@ interface ScoreCardProps {
   feedback: string[];
   improvements: string[];
   quotes?: string[];
+  className?: string;
 }
 
-const ScoreCard = ({ score, section, feedback, improvements, quotes = [] }: ScoreCardProps) => {
+const ScoreCard = ({ score, section, feedback, improvements, quotes = [], className = '' }: ScoreCardProps) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [hasBeenClicked, setHasBeenClicked] = React.useState(false);
 
@@ -49,7 +50,7 @@ const ScoreCard = ({ score, section, feedback, improvements, quotes = [] }: Scor
   };
 
   return (
-    <div className={`border rounded-lg overflow-hidden mb-4 shadow-sm hover:shadow-md transition-all ${getBorderColor()} relative`}>
+    <div className={`border rounded-lg overflow-hidden mb-4 shadow-sm hover:shadow-md transition-all ${getBorderColor()} ${className} relative`}>
       <div 
         className="p-4 flex items-center justify-between cursor-pointer hover:bg-gray-50 transition-colors"
         onClick={toggleExpand}

@@ -327,7 +327,11 @@ export default function ResultsPage() {
             {analysisResult?.sections.map((section, index) => (
               <ScoreCard
                 key={index}
-                section={section}
+                score={section.score}
+                section={section.name}
+                feedback={section.feedback}
+                improvements={section.improvements}
+                quotes={section.quotes}
                 className="transition-all duration-300 transform hover:scale-[1.02]"
               />
             ))}
