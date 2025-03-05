@@ -15,7 +15,8 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setError(null);
     
-    if (acceptedFiles.length === 0) {
+    if (!acceptedFiles || acceptedFiles.length === 0) {
+      setError('No file selected. Please try again.');
       return;
     }
 
@@ -53,7 +54,7 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
     onFileUpload(selectedFile);
   }, [onFileUpload]);
 
-  const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
       'application/pdf': ['.pdf'],
@@ -64,7 +65,7 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
       'text/plain': ['.txt']
     },
     maxFiles: 1,
-    noClick: file !== null,
+    noClick: false,
     noKeyboard: false,
   });
 
@@ -72,13 +73,6 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
     setFile(null);
     setError(null);
     onFileUpload(null as any);
-  };
-
-  const handleReplaceFile = () => {
-    if (file) {
-      removeFile();
-    }
-    open();
   };
 
   return (
@@ -89,6 +83,7 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-all ${
             isDragActive ? 'border-indigo-500 bg-indigo-50' : 'border-gray-300 hover:border-indigo-500 hover:shadow-md'
           }`}
+          onClick={() => fileInputRef.current?.click()}
         >
           <input {...getInputProps()} ref={fileInputRef} />
           <div className="flex flex-col items-center justify-center space-y-4">
@@ -97,7 +92,7 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
             </div>
             <div>
               <p className="text-lg font-medium text-gray-900">Drag and drop your resume here</p>
-              <p className="text-sm text-gray-500 mt-1">or click to browse files</p>
+              <p className="text-sm text-gray-500 mt-1">or click anywhere to browse files</p>
             </div>
             <p className="text-xs text-gray-400 bg-gray-50 px-3 py-1 rounded-full">Supports PDF, DOC, DOCX, JPG, JPEG, PNG, TXT (Max 5MB)</p>
             <p className="text-xs text-indigo-600 font-medium">✨ NEW: Upload resume images for AI analysis!</p>
@@ -135,17 +130,6 @@ const FileUpload = ({ onFileUpload }: FileUploadProps) => {
           <span>{error}</span>
         </div>
       )}
-      
-      <div className="mt-4 flex justify-center">
-        <Button 
-          variant="outline" 
-          size="sm"
-          onClick={handleReplaceFile}
-          className={`shadow-sm ${file ? 'text-indigo-600 border-indigo-600 hover:bg-indigo-50' : 'text-indigo-600 border-indigo-600 hover:bg-indigo-50'}`}
-        >
-          {file ? 'Replace File' : 'Browse Files'}
-        </Button>
-      </div>
       
       <div className="mt-2 text-center">
         <p className="text-xs text-gray-500">

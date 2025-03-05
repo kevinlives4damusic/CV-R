@@ -131,35 +131,55 @@ export default function UploadPage() {
         
         // Call the server-side API endpoint
         const extractTextEndpoint = process.env.NEXT_PUBLIC_EXTRACT_TEXT_API || '/api/extract-text';
+        console.log('Calling extract text API at:', extractTextEndpoint);
+        console.log('File type:', file.type);
+        console.log('File size:', file.size);
+        
         const response = await fetch(extractTextEndpoint, {
           method: 'POST',
           body: formData,
         });
         
         console.log('Extract text API response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
         
         // Check if the response is HTML instead of JSON
         const contentType = response.headers.get('content-type');
-        console.log('Extract text API content type:', contentType);
-        
-        if (contentType && contentType.includes('text/html')) {
-          console.error('Received HTML instead of JSON from extract-text API');
-          const htmlText = await response.text();
-          console.error('HTML response preview:', htmlText.substring(0, 200));
-          throw new Error('API returned HTML instead of JSON. This might indicate a server configuration issue.');
-        }
+        console.log('Response content type:', contentType);
         
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`Server error: ${errorData.error || response.statusText}`);
+          const errorText = await response.text();
+          console.error('Error response body:', errorText);
+          throw new Error(`Server error: ${errorText || response.statusText}`);
         }
         
-        const data = await response.json();
-        resumeText = data.text;
+        let data;
+        try {
+          data = await response.json();
+          console.log('API Response data (full):', JSON.stringify(data, null, 2));
+          console.log('API Response data keys:', Object.keys(data));
+        } catch (jsonError) {
+          console.error('JSON parse error:', jsonError);
+          const rawText = await response.clone().text();
+          console.error('Raw response:', rawText);
+          throw new Error('Failed to parse API response as JSON');
+        }
         
+        if (!data) {
+          console.error('Empty response data from API');
+          throw new Error('Empty response from text extraction API');
+        }
+        
+        if (!data.data || !data.data.text) {
+          console.error('Response missing text field:', data);
+          throw new Error('Invalid response from text extraction API - missing text data');
+        }
+        resumeText = data.data.text;
+        
+        // Log length only after validating the text exists
         console.log('Extracted text length:', resumeText.length);
         
-        if (!resumeText || resumeText.trim().length === 0) {
+        if (resumeText.trim().length === 0) {
           throw new Error('Failed to extract text from resume - empty result');
         }
         
@@ -192,8 +212,6 @@ export default function UploadPage() {
 
       // Call DeepSeek API to analyze the resume
       try {
-        console.log('Calling API with text length:', resumeText.length);
-        
         setAnalysisStage('Analyzing your resume with AI (this may take up to 30 seconds)...');
         
         const analyzeEndpoint = process.env.NEXT_PUBLIC_ANALYZE_RESUME_API || '/api/analyze-resume';
@@ -206,6 +224,14 @@ export default function UploadPage() {
           setUploadStep(1);
           return;
         }
+
+        // Validate resumeText before using it
+        if (!resumeText || typeof resumeText !== 'string') {
+          throw new Error('No valid resume text available for analysis');
+        }
+        
+        // Log the text length after we've confirmed it exists and is a string
+        console.log('Calling API with text length:', resumeText.length);
         
         const response = await fetch(analyzeEndpoint, {
           method: 'POST',
@@ -503,13 +529,6 @@ export default function UploadPage() {
       case 1:
         return (
           <div className="space-y-8">
-            <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">Upload Your Resume</h1>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                Upload your resume in PDF or Word format for AI-powered analysis. We'll help you understand your resume's strengths and areas for improvement.
-              </p>
-            </div>
-
             <FileUpload onFileUpload={handleFileUpload} />
 
             <div className="flex flex-col items-center space-y-4">

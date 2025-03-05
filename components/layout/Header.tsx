@@ -73,7 +73,7 @@ const Header = () => {
                   className={`flex items-center space-x-2 ${isScrolled ? 'text-gray-800' : 'text-gray-800'} hover:text-indigo-600 transition-colors`}
                 >
                   <User className="h-5 w-5" />
-                  <span>{user.email?.split('@')[0] || 'User'}</span>
+                  <span>{user.displayName || user.email?.split('@')[0] || 'User'}</span>
                 </button>
                 
                 {isUserMenuOpen && (

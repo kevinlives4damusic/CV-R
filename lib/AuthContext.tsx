@@ -9,7 +9,8 @@ import {
   signOut, 
   GoogleAuthProvider, 
   signInWithPopup,
-  sendEmailVerification
+  sendEmailVerification,
+  updateProfile
 } from 'firebase/auth';
 import { auth } from './firebase';
 import Cookies from 'js-cookie';
@@ -18,7 +19,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string) => Promise<void>;
   logOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
 }
@@ -61,9 +62,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string): Promise<void> => {
+  const signUp = async (email: string, password: string, name: string): Promise<void> => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Update profile with name
+      await updateProfile(userCredential.user, {
+        displayName: name
+      });
       // Send email verification
       await sendEmailVerification(userCredential.user);
       const idToken = await userCredential.user.getIdToken();

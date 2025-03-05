@@ -1,98 +1,53 @@
-# Resume AI
+# Resume.AI
 
-An AI-powered resume analysis and improvement tool that helps job seekers optimize their resumes for specific job positions.
+A modern AI-powered resume analysis and optimization tool built with Next.js and Firebase.
 
 ## Features
 
-- Resume upload and analysis
-- AI-powered feedback and suggestions
-- Resume comparison
-- User authentication and profile management
-- Resume storage and history
-
-## Static Website Limitations
-
-The deployed version at [https://resumethecv.web.app](https://resumethecv.web.app) is a static website with limited functionality. The following features require server-side processing and are not available in the static deployment:
-
-- Resume text extraction
 - AI-powered resume analysis
-- Resume comparison
+- Keyword optimization
+- Industry comparison
+- Career path suggestions
+- Competitor analysis
+- Real-time feedback
+- PDF support
+- User authentication
+- Responsive design
 
-## Running Locally for Full Functionality
+## Tech Stack
 
-To access all features, you need to run the application locally:
+- Next.js 14
+- TypeScript
+- Firebase (Authentication & Firestore)
+- Tailwind CSS
+- Lucide Icons
+- React Context API
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/resume-ai.git
-   cd resume-ai
-   ```
+## Getting Started
 
+1. Clone the repository
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
-
-3. Create a `.env.local` file with the following environment variables:
+3. Set up your Firebase configuration in `.env.local`:
    ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
-   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
-   DEEPSEEK_API_KEY=your_deepseek_api_key
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
    ```
-
 4. Run the development server:
-   ```
+   ```bash
    npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
 ## Deployment
 
-The application is deployed as a static website to Firebase Hosting. To deploy your own version:
+The application is deployed on Vercel and can be accessed at [your-url-here].
 
-1. Install Firebase CLI:
-   ```
-   npm install -g firebase-tools
-   ```
+## Contributing
 
-2. Login to Firebase:
-   ```
-   firebase login
-   ```
-
-3. Initialize Firebase:
-   ```
-   firebase init
-   ```
-
-4. Build and deploy:
-   ```
-   npm run deploy
-   ```
-
-## API Endpoints
-
-When running locally, the following API endpoints are available:
-
-- `/api/extract-text` - Extracts text from uploaded resume files
-- `/api/analyze-resume` - Analyzes resume text and provides feedback
-- `/api/analyze-resume-fallback` - Fallback endpoint for resume analysis
-
-## Technologies Used
-
-- Next.js
-- React
-- TypeScript
-- Firebase (Authentication, Firestore, Storage)
-- Tailwind CSS
-- DeepSeek API for AI analysis
-
-## License
-
-[MIT](LICENSE)
+Contributions are welcome! Please feel free to submit a Pull Request.

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import MainLayout from '@/components/layout/MainLayout'
+import AuthLayout from '@/components/layout/AuthLayout'
 import { Button } from '@/components/ui/Button'
 import { Mail, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react'
 import { sendPasswordResetEmail } from 'firebase/auth'
@@ -46,7 +46,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <MainLayout>
+    <AuthLayout>
       <div className="container-custom py-12">
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-lg">
           <div className="p-8">
@@ -123,6 +123,6 @@ export default function ResetPassword() {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </AuthLayout>
   )
 } 

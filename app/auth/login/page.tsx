@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import MainLayout from '@/components/layout/MainLayout'
+import AuthLayout from '@/components/layout/AuthLayout'
 import { useAuth } from '@/lib/AuthContext'
 import { Button } from '@/components/ui/Button'
 import { Loader2, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react'
@@ -100,7 +100,7 @@ export default function LoginPage() {
   }
 
   return (
-    <MainLayout>
+    <AuthLayout>
       <div className="container-custom py-12">
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-lg">
           <div className="p-8">
@@ -248,6 +248,6 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </AuthLayout>
   )
 } 
