@@ -124,34 +124,36 @@ export default function ResultsPage() {
       // Get analysis result from session storage
       const storedResult = sessionStorage.getItem('analysisResult');
       const storedResumeText = sessionStorage.getItem('resumeText');
-      
-      if (storedResult) {
-        const parsedResult = JSON.parse(storedResult);
-        console.log('Retrieved analysis result from session storage:', parsedResult);
-        
-        // If we have resume text, add quotes to each section
-        if (storedResumeText) {
-          setResumeText(storedResumeText);
-          
-          // Add quotes to each section
-          parsedResult.sections = parsedResult.sections.map((section: Section) => ({
-            ...section,
-            quotes: extractRelevantQuotes(section.name, section.improvements, storedResumeText)
-          }));
-        }
-        
-        setAnalysisResult(parsedResult);
-      } else {
-        setError('No analysis result found. Please upload a resume first.');
-        console.error('No analysis result found in session storage');
+
+      if (!storedResult || !storedResumeText) {
+        setError('Please upload your resume first to see the analysis.');
+        setTimeout(() => {
+          router.push('/upload');
+        }, 2000);
+        return;
       }
-    } catch (err) {
-      console.error('Error retrieving analysis result:', err);
-      setError('Error retrieving analysis result. Please try again.');
-    } finally {
+
+      const analysisData = JSON.parse(storedResult);
+
+      // Add quotes to each section
+      if (analysisData.sections) {
+        analysisData.sections = analysisData.sections.map((section: Section) => ({
+          ...section,
+          quotes: extractRelevantQuotes(section.name, section.improvements, storedResumeText)
+        }));
+      }
+
+      setAnalysisResult(analysisData);
+      setResumeText(storedResumeText);
       setLoading(false);
+    } catch (err) {
+      console.error('Error loading analysis result:', err);
+      setError('An error occurred while loading your analysis. Please try uploading your resume again.');
+      setTimeout(() => {
+        router.push('/upload');
+      }, 2000);
     }
-  }, []);
+  }, [router]);
 
   // Function to get color based on score
   const getScoreColor = (score: number) => {
@@ -750,15 +752,16 @@ export default function ResultsPage() {
         <div className="container-custom py-12 px-4 sm:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-md p-8 mb-8">
-              <div className="flex items-center text-red-600 mb-4">
-                <AlertCircle className="h-5 w-5 mr-2" />
-                <h2 className="text-xl font-semibold">Error</h2>
-              </div>
-              <p className="text-gray-600">{error}</p>
-              <div className="mt-6">
+              <div className="flex items-center justify-center flex-col text-center">
+                <div className="flex items-center text-red-600 mb-4">
+                  <AlertCircle className="h-8 w-8 mr-2" />
+                  <h2 className="text-xl font-semibold">No Resume Found</h2>
+                </div>
+                <p className="text-gray-600 mb-6">{error}</p>
+                <p className="text-gray-500 mb-6">Redirecting you to upload a resume...</p>
                 <Link href="/upload" className="text-indigo-600 hover:text-indigo-700 flex items-center">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Upload
+                  Go to Upload Page
                 </Link>
               </div>
             </div>
